@@ -17,5 +17,6 @@ public class Planner {
         ImportExport ie = new ImportExport();
         ie.exportExcel(myList);
         ie.importExcel(myList);
+        System.out.println(myList);
     }
 }

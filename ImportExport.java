@@ -1,6 +1,8 @@
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -13,6 +15,7 @@ public class ImportExport {
     private Workbook workbook;
     private Sheet sheet;
     private FileOutputStream fos;
+    private ArrayList<String> importFile;
     
     
     public void exportExcel(Save save) throws IOException {
@@ -44,8 +47,27 @@ public class ImportExport {
     public void importExcel(Save save) throws IOException {
         FileInputStream fls = new FileInputStream("planner2.xls");
         Workbook wb = new HSSFWorkbook(fls);
-        String result = ((Cell) wb.getSheetAt(0).getRow(0)).getStringCellValue();
-        System.out.println(result);
+        Sheet sheet = wb.getSheetAt(0);
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            Iterator<Cell> cellIterator = row.cellIterator();
+            this.importFile = new ArrayList<>();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+                switch (cell.getCellType()) {
+                    case Cell.CELL_TYPE_NUMERIC:
+                        this.importFile.add(String.format("%.0f", cell.getNumericCellValue()));
+                        break;
+                    case Cell.CELL_TYPE_STRING:
+                        this.importFile.add(cell.getStringCellValue());
+                        break;
+                    }
+                }
+            }
+            if (!this.importFile.containsAll(save.getpTask())) {
+                save.getpTask().add(this.importFile);
+        }
         fls.close();
     }
     
