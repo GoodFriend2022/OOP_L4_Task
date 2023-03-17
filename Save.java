@@ -1,9 +1,24 @@
 import java.util.ArrayList;
-import java.util.HashMap;
+public class Save {
 
-public interface Save<T extends Task> {
+    private ArrayList<ArrayList<String>> pTask = new ArrayList<>();
+    private ArrayList<String> listTasks;
+    int index = 0;
+    
+    public ArrayList<ArrayList<String>> getpTask() {
+        return pTask;
+    }
+   
+    public void save(Task task, Performer pf) {
+        this.listTasks = new ArrayList<>();
+        this.listTasks.add(String.format("%s", pTask.size() + 1));
+        this.listTasks.addAll(task.getT());
+        this.listTasks.add(pf.toString());
+        this.pTask.add(this.listTasks);
+    }
 
-    HashMap<Integer, Task> listTasks = new HashMap<>();
-
-    public void save(T task);
+    @Override
+    public String toString() {
+        return String.format("%s", pTask);
+    }
 }

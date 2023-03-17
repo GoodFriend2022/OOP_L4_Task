@@ -1,20 +1,8 @@
-import java.util.HashMap;
-
-public class Performer implements Save<Task> {
+public class Performer {
     private String name;
-
-    private HashMap<String, HashMap<Integer, Task>> pTask = new HashMap<>();
-    
-    public HashMap<String, HashMap<Integer, Task>> getpTask() {
-        return pTask;
-    }
 
     public Performer(String name) {
         this.name = name;
-    }
-
-    public Performer() {
-        
     }
 
     public String getName() {
@@ -23,12 +11,6 @@ public class Performer implements Save<Task> {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public void save(Task task) {
-        listTasks.put(listTasks.size() + 1, task);
-        this.pTask.put(this.name, listTasks);
     }
     
     @Override
